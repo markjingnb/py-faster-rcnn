@@ -1,0 +1,8 @@
+1:install ffmpeg
+git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg
+
+2:install font
+'/usr/share/fonts/truetype/msyh.ttf'
+
+3:video demo=/py-faster-rcnn/caffe-fast-rcnn/examples/web_demo/tools/1.MOV
+put
