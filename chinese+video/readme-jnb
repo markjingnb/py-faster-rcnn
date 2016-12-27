@@ -7,3 +7,13 @@ git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg
 3:video demo=
 /py-faster-rcnn/caffe-fast-rcnn/examples/web_demo/tools/1.MOV
 
+4:index.html=
+/home/sjiton/jnbgit/caffe/jnb-reco/py-faster-rcnn/caffe-fast-rcnn/examples/web_demo/templates
+
+5:web demo
+  cd py-faster-rcnn/caffe-fast-rcnn/examples/web_demo
+  python2 app.py
+
+6:video demo
+  cd py-faster-rcnn/caffe-fast-rcnn/examples/web_demo/tools
+  python2 demo.py
