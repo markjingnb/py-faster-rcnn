@@ -183,6 +183,40 @@ def parse_args():
 
     return args
 
+def init_cnn():
+    cfg.TEST.HAS_RPN = True  # Use RPN for proposals
+
+    args = parse_args()
+
+    prototxt = os.path.join(cfg.MODELS_DIR, NETS[args.demo_net][0],
+                            'faster_rcnn_alt_opt', 'faster_rcnn_test.pt')
+    caffemodel = os.path.join(cfg.DATA_DIR, 'faster_rcnn_models',
+                              NETS[args.demo_net][1])
+
+    if not os.path.isfile(caffemodel):
+        raise IOError(('{:s} not found.\nDid you run ./data/script/'
+                       'fetch_faster_rcnn_models.sh?').format(caffemodel))
+
+    #if args.cpu_mode:
+    #    caffe.set_mode_cpu()
+    #else:
+    caffe.set_mode_cpu()
+    #caffe.set_device(args.gpu_id)
+    #cfg.GPU_ID = args.gpu_id
+    net = caffe.Net(prototxt, caffemodel, caffe.TEST)
+
+#print '\n\nLoaded network {:s}'.format(caffemodel)
+
+    # Warmup on a dummy image
+    im = 128 * np.ones((300, 500, 3), dtype=np.uint8)
+    for i in xrange(2):
+        _, _= im_detect(net, im)
+    return net 
+
+
+
+def do_run(net,filename):
+    demo(net,filename) 
 #if __name__ == '__main__':
 def zfjnb(im_file):
 

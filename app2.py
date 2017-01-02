@@ -14,8 +14,9 @@ from PIL import Image
 import cStringIO as StringIO
 import urllib
 import exifutil
-from tools.jnbdemo import zfjnb
-
+#from tools.jnbdemo import zfjnb
+from tools.jnbdemo import init_cnn
+from tools.jnbdemo import do_run
 import cv2
 
 #caffe_root = '../../../caffe-fast-rcnn/'
@@ -25,7 +26,7 @@ import sys
 import caffe  
 reload(sys)
 from utils.timer import Timer
-
+faster_net=init_cnn()
 #import caffe
 sys.setdefaultencoding('utf-8')
 
@@ -69,7 +70,8 @@ def classify_url():
     image = Image.fromarray((255 * image).astype('uint8'))
     #cv2.imwrite('tmp.jpg',image)
     image.save(FORMAT_FILE,'BMP')
-    zfjnb(FORMAT_FILE)
+    #zfjnb(FORMAT_FILE)
+    do_run(faster_net,FORMAT_FILE)
     #logging.info('Saving to %s.', filename)
     image = exifutil.open_oriented_im('tmp.png')
 
@@ -120,8 +122,8 @@ def classify_upload():
 
     timer = Timer()
     timer.tic()
-    zfjnb(FORMAT_FILE)
-
+    #zfjnb(FORMAT_FILE)
+    do_run(faster_net,FORMAT_FILE)
     timer.toc()
     print ('jnb alg {:.3f}s ').format(timer.total_time)
     #logging.info('Saving to %s.', filename)
@@ -279,11 +281,11 @@ def start_from_terminal(app):
         action='store_true', default=False)
 
     opts, args = parser.parse_args()
-    ImagenetClassifier.default_args.update({'gpu_mode': opts.gpu})
+    #ImagenetClassifier.default_args.update({'gpu_mode': opts.gpu})
 
     # Initialize classifier + warm start by forward for allocation
-    app.clf = ImagenetClassifier(**ImagenetClassifier.default_args)
-    app.clf.net.forward()
+    #app.clf = ImagenetClassifier(**ImagenetClassifier.default_args)
+    #app.clf.net.forward()
 
     if opts.debug:
         app.run(debug=True, host='0.0.0.0', port=opts.port)
